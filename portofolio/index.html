@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="pt-PT" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ebenezer Felismino | Técnico de Informática & Front-end Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP for absurd animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                        },
+                        dark: '#030712',
+                    },
+                    animation: {
+                        'blob': 'blob 10s infinite',
+                        'blob-reverse': 'blob-reverse 12s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        'blob-reverse': {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(-30px, 50px) scale(1.2)' },
+                            '66%': { transform: 'translate(20px, -20px) scale(0.8)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        shimmer: {
+                            from: { backgroundPosition: '200% center' },
+                            to: { backgroundPosition: '-200% center' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #030712;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .aura-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        .aura-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.4;
+            mix-blend-mode: screen;
+        }
+
+        .orb-1 {
+            top: -10%;
+            left: 10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.8) 0%, rgba(0, 0, 0, 0) 70%);
+        }
+
+        .orb-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.6) 0%, rgba(0, 0, 0, 0) 70%);
+        }
+
+        /* Glassmorphism cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            /* Mais transparente */
+            backdrop-filter: blur(8px);
+            /* Blur mais leve para ver mais do fundo */
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            /* Borda mais discreta */
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            /* Sombra mais suave */
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(34, 197, 94, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(34, 197, 94, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #4ade80, #06b6d4, #4ade80);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 5s linear infinite;
+        }
+
+        /* Hover Sweep Button */
+        .btn-sweep {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-sweep::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(34, 197, 94, 0.4), transparent);
+            transform: skewX(-20deg);
+            transition: all 0.6s ease;
+        }
+
+        .btn-sweep:hover::after {
+            left: 150%;
+        }
+
+        /* Mouse Glow Base CSS */
+        .glow-effect {
+            position: relative;
+        }
+
+        .glow-effect::before {
+            content: "";
+            position: absolute;
+            top: var(--y, 0);
+            left: var(--x, 0);
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .glow-effect:hover::before {
+            opacity: 1;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #030712;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #22c55e;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #16a34a;
+        }
+
+        /* Timeline styles */
+        .timeline-dot {
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-brand-500 selection:text-white relative">
+
+    <!-- Fundo de Imagem (Essencial para destacar o Glassmorphism) -->
+    <div class="fixed inset-0 w-full h-full z-[-2]">
+        <img src="public/bg_real_office.png" class="w-full h-full object-cover opacity-80"
+            alt="UI/UX Workspace Background">
+        <div class="absolute inset-0 bg-dark/40"></div>
+    </div>
+
+    <!-- Aura Background -->
+    <div class="aura-bg pointer-events-none">
+        <div class="aura-orb orb-1 animate-blob"></div>
+        <div class="aura-orb orb-2 animate-blob-reverse" style="animation-delay: 2s;"></div>
+    </div>
+
+    <header class="fixed top-0 w-full z-50 transition-all duration-300" id="header">
+        <div class="absolute inset-0 bg-dark/20 backdrop-blur-md border-b border-white/5"></div>
+        <!-- Overlay top bar mais transparente -->
+        <nav class="relative mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+            <p class="text-2xl font-black tracking-tighter mix-blend-difference text-gradient">Ebenezer Felismino<span
+                    class="text-brand-400">.</span></p>
+            <div class="hidden gap-8 text-sm font-medium tracking-wide text-slate-300 md:flex">
+                <a href="#sobre" class="hover:text-brand-400 transition-colors">Perfil</a>
+                <a href="#experiencia" class="hover:text-brand-400 transition-colors">Experiência</a>
+                <a href="#tecnologias" class="hover:text-brand-400 transition-colors">Habilidades</a>
+                <a href="projetos.html" class="hover:text-brand-400 transition-colors">Projetos</a>
+            </div>
+            <a href="index.html#contacto"
+                class="hidden md:inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white transition-all bg-white/10 border border-white/10 rounded-full hover:bg-brand-500 hover:border-brand-500 hover:shadow-[0_0_20px_rgba(34,197,94,0.4)]">
+                Falar comigo
+            </a>
+        </nav>
+    </header>
+
+    <main class="relative z-10 mx-auto max-w-7xl px-6 pb-32 pt-32 lg:pt-48">
+        <!-- Hero Section -->
+        <section class="min-h-[70vh] flex flex-col justify-center items-start">
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1.5 mb-8 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-sm font-medium tracking-wide gs-reveal">
+                <span class="relative flex h-2 w-2">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+                </span>
+                Técnico de Informática & Web Developer
+            </div>
+
+            <h1
+                class="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.9] text-white gs-reveal-title">
+                <div class="overflow-hidden"><span class="block translate-y-full hover-text">Creative</span></div>
+                <div class="overflow-hidden"><span
+                        class="block translate-y-full text-gradient hover-text">Front-end</span></div>
+                <div class="overflow-hidden"><span class="block translate-y-full hover-text">Developer.</span></div>
+            </h1>
+
+            <p class="mt-10 max-w-2xl text-lg md:text-xl text-slate-400 gs-reveal leading-relaxed">
+                Sou o <span class="text-white font-bold">Ebenezer Felismino</span>. Transformo ideias complexas em
+                interfaces digitais
+                fluidas, e aplico o meu conhecimento técnico para garantir que tudo funcione com a máxima precisão por
+                trás dos bastidores.
+            </p>
+
+            <div class="mt-12 flex flex-wrap gap-4 gs-reveal">
+                <a href="projetos.html"
+                    class="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-dark bg-brand-400 rounded-full overflow-hidden transition-transform hover:scale-105">
+                    <span
+                        class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></span>
+                    <span class="relative">Explorar trabalhos</span>
+                    <svg class="relative ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+                <a href="#currículo"
+                    class="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white bg-white/5 border border-white/10 rounded-full overflow-hidden transition-all hover:bg-white/10 hover:border-brand-500/50">
+                    <span class="relative">Visualizar CV Geral</span>
+                    <svg class="relative ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg>
+                </a>
+            </div>
+        </section>
+
+        <!-- Sobre Section -->
+        <section id="sobre" class="mt-40 pt-20">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="gs-fade-right">
+                    <div class="text-brand-400 text-sm font-bold tracking-widest uppercase mb-4">Perfil Profissional
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-8 tracking-tight">Soluções inovadoras com <span
+                            class="text-brand-400 italic font-light">atenção ao detalhe.</span></h2>
+                    <p class="text-lg text-slate-400 leading-relaxed mb-6">
+                        Técnico de Informática com experiência consolidada em hardware, software, desenvolvimento de
+                        plataformas web e gestão de sistemas.
+                    </p>
+                    <p class="text-lg text-slate-400 leading-relaxed">
+                        Destaco-me pela habilidade em design gráfico e na resolução eficiente de problemas tecnológicos.
+                        O meu principal foco é entregar soluções de alta qualidade, mantendo sempre o forte
+                        comprometimento com os resultados e a performance.
+                    </p>
+                </div>
+                <div class="relative gs-fade-left">
+                    <div
+                        class="aspect-square lg:aspect-[4/5] rounded-3xl overflow-hidden glass-card glow-effect relative group">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-tr from-brand-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
+                        </div>
+                        <!-- IMAGEM PERFIL -->
+                        <img id="img-sobre" src="public/print_codigo.png" alt="Print de Código"
+                            class="w-full h-full object-cover object-left-top transition-transform duration-700 group-hover:scale-105" />
+                    </div>
+                    <!-- Elemento decorativo flutuante -->
+                    <div class="absolute -bottom-8 -left-8 glass-card p-6 rounded-2xl animate-blob">
+                        <p class="text-4xl font-black text-brand-400 mb-1">+2</p>
+                        <p class="text-sm font-medium text-slate-300 uppercase tracking-wider">Anos de <br />Experiência
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Experiência -->
+        <section id="experiencia" class="mt-40 pt-20">
+            <div class="text-center mb-20 gs-fade-up">
+                <h2 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight">O meu <span
+                        class="text-gradient">Percurso</span></h2>
+                <p class="text-slate-400 max-w-2xl mx-auto text-lg">Experiência profissional e formação académica que
+                    construíram a base do meu conhecimento técnico.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-16">
+                <!-- Experiência Profissional -->
+                <div class="gs-fade-right">
+                    <h3 class="text-2xl font-bold mb-10 flex items-center gap-3">
+                        <svg class="w-6 h-6 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        Experiência Profissional
+                    </h3>
+
+                    <div class="relative border-l border-white/10 ml-3 md:ml-4 space-y-12">
+                        <!-- Markout Agency -->
+                        <div class="relative pl-8 md:pl-10">
+                            <div
+                                class="absolute top-1.5 -left-[5px] w-2.5 h-2.5 rounded-full bg-brand-400 timeline-dot">
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
+                                <h4 class="text-xl font-bold text-white">Desenvolvedor Web</h4>
+                                <span
+                                    class="text-brand-400 text-sm font-semibold tracking-wider bg-brand-500/10 px-3 py-1 rounded-full mt-2 sm:mt-0 w-fit">1
+                                    ANO</span>
+                            </div>
+                            <p class="text-slate-300 font-medium mb-3">Markout Agency</p>
+                            <ul class="text-slate-400 space-y-2 text-sm md:text-base list-disc list-inside">
+                                <li>Desenvolvimento de sites e plataformas web personalizadas.</li>
+                                <li>Implementação de soluções responsivas e otimização de desempenho.</li>
+                                <li>Colaboração com equipas de design e marketing para projetos completos.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Back Solutions -->
+                        <div class="relative pl-8 md:pl-10">
+                            <div class="absolute top-1.5 -left-[5px] w-2.5 h-2.5 rounded-full bg-slate-600"></div>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
+                                <h4 class="text-xl font-bold text-white">Suporte & Consultoria</h4>
+                                <span
+                                    class="text-slate-400 text-sm font-semibold tracking-wider bg-white/5 px-3 py-1 rounded-full mt-2 sm:mt-0 w-fit">5
+                                    MESES</span>
+                            </div>
+                            <p class="text-slate-300 font-medium mb-3">Back Solutions</p>
+                            <ul class="text-slate-400 space-y-2 text-sm md:text-base list-disc list-inside">
+                                <li>Diagnóstico e resolução de problemas de software para clientes.</li>
+                                <li>Otimização de sistemas existentes para maior eficiência operacional.</li>
+                                <li>Treinamento e suporte a usuários das ferramentas disponíveis.</li>
+                            </ul>
+                        </div>
+
+                        <!-- INFOSI -->
+                        <div class="relative pl-8 md:pl-10">
+                            <div class="absolute top-1.5 -left-[5px] w-2.5 h-2.5 rounded-full bg-slate-600"></div>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
+                                <h4 class="text-xl font-bold text-white">Estagiário de TI</h4>
+                                <span
+                                    class="text-slate-400 text-sm font-semibold tracking-wider bg-white/5 px-3 py-1 rounded-full mt-2 sm:mt-0 w-fit">6
+                                    MESES</span>
+                            </div>
+                            <p class="text-slate-300 font-medium mb-3">INFOSI</p>
+                            <ul class="text-slate-400 space-y-2 text-sm md:text-base list-disc list-inside">
+                                <li>Suporte técnico em hardware e software.</li>
+                                <li>Participação na manutenção e desenvolvimento de sistemas internos.</li>
+                                <li>Implementação de soluções tecnológicas para clientes corporativos.</li>
+                            </ul>
+                        </div>
+
+                        <!-- ANGOTIC -->
+                        <div class="relative pl-8 md:pl-10">
+                            <div class="absolute top-1.5 -left-[5px] w-2.5 h-2.5 rounded-full bg-slate-600"></div>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
+                                <h4 class="text-xl font-bold text-white">Estagiário de Suporte</h4>
+                                <span
+                                    class="text-slate-400 text-sm font-semibold tracking-wider bg-white/5 px-3 py-1 rounded-full mt-2 sm:mt-0 w-fit">1
+                                    MÊS</span>
+                            </div>
+                            <p class="text-slate-300 font-medium mb-3">ANGOTIC</p>
+                            <ul class="text-slate-400 space-y-2 text-sm md:text-base list-disc list-inside">
+                                <li>Apoio em processos de gestão de informação e sistemas digitais.</li>
+                                <li>Assistência na manutenção de plataformas e suporte direto ao usuário.</li>
+                                <li>Redação de documentação técnica e elaboração de relatórios.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Educação & Skills Adicionais -->
+                <div class="gs-fade-left">
+                    <div class="mb-16">
+                        <h3 class="text-2xl font-bold mb-10 flex items-center gap-3">
+                            <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                                <path
+                                    d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222">
+                                </path>
+                            </svg>
+                            Educação
+                        </h3>
+
+                        <div class="relative border-l border-white/10 ml-3 md:ml-4">
+                            <div class="relative pl-8 md:pl-10">
+                                <div class="absolute top-1.5 -left-[5px] w-2.5 h-2.5 rounded-full bg-cyan-400 timeline-dot"
+                                    style="box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.2);"></div>
+                                <span
+                                    class="text-cyan-400 text-sm font-semibold tracking-wider bg-cyan-500/10 px-3 py-1 rounded-full mb-3 inline-block">2022
+                                    - 2025</span>
+                                <h4 class="text-xl font-bold text-white leading-snug">Instituto Privado Politécnico
+                                    <br />Pedro Pitágoras de Samos
+                                </h4>
+                                <p class="text-slate-400 mt-2">Formação Técnica</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Other Skills from CV -->
+                    <div class="glass-card p-8 rounded-3xl border-white/5">
+                        <h3 class="text-xl font-bold mb-6 text-white">Outras Competências</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span
+                                class="px-4 py-2 rounded-lg text-sm bg-white/5 border border-white/10 text-slate-300">Suporte
+                                Técnico</span>
+                            <span
+                                class="px-4 py-2 rounded-lg text-sm bg-white/5 border border-white/10 text-slate-300">Hardware
+                                TI</span>
+                            <span
+                                class="px-4 py-2 rounded-lg text-sm bg-white/5 border border-white/10 text-slate-300">Windows
+                                Server</span>
+                            <span
+                                class="px-4 py-2 rounded-lg text-sm bg-white/5 border border-white/10 text-slate-300">Design
+                                Gráfico</span>
+                            <span
+                                class="px-4 py-2 rounded-lg text-sm bg-white/5 border border-white/10 text-slate-300">Canva</span>
+                            <span
+                                class="px-4 py-2 rounded-lg text-sm bg-white/5 border border-white/10 text-slate-300">Trabalho
+                                em Equipa</span>
+                            <span
+                                class="px-4 py-2 rounded-lg text-sm bg-white/5 border border-white/10 text-slate-300">Rápido
+                                Aprendizado</span>
+                        </div>
+
+                        <div class="mt-8">
+                            <h4 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Idiomas</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-white font-medium">Português</span>
+                                    <span class="text-brand-400 text-sm">Fluente</span>
+                                </div>
+                                <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+                                    <div class="bg-brand-500 h-full w-full"></div>
+                                </div>
+                                <div class="flex justify-between items-center mt-4">
+                                    <span class="text-white font-medium">Inglês</span>
+                                    <span class="text-slate-400 text-sm">Nível Inicial</span>
+                                </div>
+                                <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+                                    <div class="bg-cyan-500 h-full w-[30%]"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tecnologias / Desenvolvimento Web Section -->
+        <section id="tecnologias" class="mt-32 pt-20">
+            <div class="text-center mb-16 gs-fade-up">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 tracking-tight">Stack de Desenvolvimento</h2>
+            </div>
+
+            <div class="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                <!-- Core Frontend -->
+                <div
+                    class="tech-card glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:-translate-y-2">
+                    <img src="https://cdn.simpleicons.org/react/white" alt="React"
+                        class="h-10 w-10 opacity-70 group-hover:opacity-100 transition-all" />
+                    <span class="font-medium text-slate-300">React</span>
+                </div>
+                <div
+                    class="tech-card glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:-translate-y-2">
+                    <img src="https://cdn.simpleicons.org/nextdotjs/white" alt="Next.js"
+                        class="h-10 w-10 opacity-70 group-hover:opacity-100 transition-all" />
+                    <span class="font-medium text-slate-300">Next.js</span>
+                </div>
+
+                <!-- Styling & UI -->
+                <div
+                    class="tech-card glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:-translate-y-2">
+                    <img src="https://cdn.simpleicons.org/tailwindcss/white" alt="Tailwind"
+                        class="h-10 w-10 opacity-70 group-hover:opacity-100 transition-all" />
+                    <span class="font-medium text-slate-300">Tailwind CSS</span>
+                </div>
+                <div
+                    class="tech-card glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:-translate-y-2">
+                    <svg viewBox="0 0 256 256"
+                        class="h-10 w-10 opacity-70 group-hover:opacity-100 transition-all text-white" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M208 128l-80 80M192 40L40 192" stroke="currentColor" stroke-width="32"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <span class="font-medium text-slate-300">Shadcn UI</span>
+                </div>
+                <div
+                    class="tech-card glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:-translate-y-2">
+                    <img src="https://cdn.simpleicons.org/bootstrap/white" alt="Bootstrap"
+                        class="h-10 w-10 opacity-70 group-hover:opacity-100 transition-all" />
+                    <span class="font-medium text-slate-300">Bootstrap</span>
+                </div>
+
+                <!-- State & Data -->
+                <div
+                    class="tech-card glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:-translate-y-2">
+                    <svg class="h-10 w-10 opacity-70 group-hover:opacity-100 transition-all text-white" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+                        </path>
+                    </svg>
+                    <span class="font-medium text-slate-300">Zustand</span>
+                </div>
+                <div
+                    class="tech-card glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:-translate-y-2">
+                    <img src="https://cdn.simpleicons.org/axios/white" alt="Axios"
+                        class="h-10 w-10 opacity-70 group-hover:opacity-100 transition-all" />
+                    <span class="font-medium text-slate-300">Axios</span>
+                </div>
+
+                <!-- Tooling & Animation -->
+                <div
+                    class="tech-card glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:-translate-y-2">
+                    <img src="https://cdn.simpleicons.org/vite/white" alt="Vite"
+                        class="h-10 w-10 opacity-70 group-hover:opacity-100 transition-all" />
+                    <span class="font-medium text-slate-300">Vite</span>
+                </div>
+                <div
+                    class="tech-card glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:-translate-y-2">
+                    <img src="https://cdn.simpleicons.org/typescript/white" alt="TypeScript"
+                        class="h-10 w-10 opacity-70 group-hover:opacity-100 transition-all" />
+                    <span class="font-medium text-slate-300">TypeScript</span>
+                </div>
+                <div
+                    class="tech-card glass-card p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:-translate-y-2">
+                    <img src="https://cdn.simpleicons.org/figma/white" alt="Figma UI/UX"
+                        class="h-10 w-10 opacity-70 group-hover:opacity-100 transition-all" />
+                    <span class="font-medium text-slate-300">UI / UX Design</span>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Info/Marquee Section -->
+        <section class="mt-40 -mx-6 py-10 bg-brand-500 overflow-hidden transform -rotate-2 gs-fade-up">
+            <div class="flex flex-nowrap whitespace-nowrap gap-10 opacity-90">
+                <div
+                    class="animate-[marquee_20s_linear_infinite] flex gap-10 text-dark font-black text-4xl uppercase items-center">
+                    <span>Let's build something amazing</span>
+                    <span>✦</span>
+                    <span>Disponível para novos desafios</span>
+                    <span>✦</span>
+                    <span>Ebenezer Felismino</span>
+                    <span>✦</span>
+                    <span>Frontend & Hardware</span>
+                    <span>✦</span>
+                    <span>Let's build something amazing</span>
+                    <span>✦</span>
+                    <span>Disponível para novos desafios</span>
+                    <span>✦</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacto / Info Section -->
+        <section id="contacto" class="mt-32 mb-20 relative max-w-5xl mx-auto gs-fade-up">
+            <div class="absolute inset-0 bg-brand-500/10 blur-[100px] rounded-full z-0"></div>
+            <div
+                class="relative z-10 glass-card p-12 md:p-20 rounded-[3rem] border-white/10 flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2 text-center md:text-left">
+                    <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-6">Pronto para <br />inovar?</h2>
+                    <p class="text-lg text-slate-400 mb-8 max-w-md">
+                        Aberto a novas oportunidades na área de TI, suporte ou desenvolvimento web.
+                    </p>
+                    <div class="space-y-4 text-slate-300 font-medium mb-10">
+                        <div class="flex items-center gap-4 justify-center md:justify-start">
+                            <div class="p-3 rounded-full bg-white/5 text-brand-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <a href="mailto:ebenezerfelismino@outlook.com"
+                                class="hover:text-white transition">ebenezerfelismino@outlook.com</a>
+                        </div>
+                        <div class="flex items-center gap-4 justify-center md:justify-start">
+                            <div class="p-3 rounded-full bg-white/5 text-brand-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <span>+244 976 050 583 / +244 932 167 975</span>
+                        </div>
+                        <div class="flex items-center gap-4 justify-center md:justify-start">
+                            <div class="p-3 rounded-full bg-white/5 text-brand-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                    </path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <span>Talatona / Antigo Guerrilheiro</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:w-1/2 flex flex-col gap-6" id="currículo">
+                    <!-- Este botão serve para carregar ou fazer o download do currículo PDF que deves colocar dentro da pasta 'currículo' no teu projeto -->
+                    <a href="currículo/cv.pdf" target="_blank" download="Ebenezer_Felismino_CV.pdf"
+                        class="relative flex items-center justify-between p-6 glass-card btn-sweep rounded-2xl hover:border-brand-500 hover:shadow-[0_0_30px_rgba(34,197,94,0.2)] group transition-all">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="p-4 rounded-xl bg-brand-500/10 text-brand-400 group-hover:scale-110 transition-transform">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="text-left">
+                                <h3 class="text-xl font-bold text-white mb-1">Baixar CV em PDF</h3>
+                                <p class="text-sm text-slate-400">Download direto do documento formatado</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="https://wa.me/244976050583" target="_blank"
+                        class="relative flex items-center justify-between p-6 glass-card btn-sweep rounded-2xl hover:border-brand-500 hover:shadow-[0_0_30px_rgba(34,197,94,0.2)] group transition-all">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="p-4 rounded-xl bg-[#25D366]/10 text-[#25D366] group-hover:scale-110 transition-transform">
+                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+                                </svg>
+                            </div>
+                            <div class="text-left">
+                                <h3 class="text-xl font-bold text-white mb-1">Chamar no WhatsApp</h3>
+                                <p class="text-sm text-slate-400">Resposta rápida garantida</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-white/5 py-10 text-center text-slate-500 pb-10">
+        <p>© 2026 Ebenezer Felismino. Construído com paixão e precisão.</p>
+    </footer>
+
+    <style>
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+
+    <!-- GSAP Animations Logic -->
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Initial loader / reveal for Hero text
+        const tl = gsap.timeline();
+
+        tl.to('.gs-reveal-title span', {
+            y: 0,
+            duration: 1,
+            ease: "power4.out",
+            stagger: 0.15,
+            delay: 0.2
+        })
+            .fromTo('.gs-reveal',
+                { y: 30, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1, ease: "power3.out", stagger: 0.2 },
+                "-=0.5"
+            );
+
+        // Header scroll background
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-lg');
+            } else {
+                header.classList.remove('shadow-lg');
+            }
+        });
+
+        // Scroll Animations for sections
+        gsap.utils.toArray('.gs-fade-up').forEach(elem => {
+            gsap.fromTo(elem,
+                { y: 50, opacity: 0 },
+                {
+                    scrollTrigger: {
+                        trigger: elem,
+                        start: "top 85%",
+                    },
+                    y: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power3.out"
+                }
+            );
+        });
+
+        gsap.utils.toArray('.gs-fade-right').forEach(elem => {
+            gsap.fromTo(elem,
+                { x: -50, opacity: 0 },
+                {
+                    scrollTrigger: {
+                        trigger: elem,
+                        start: "top 85%",
+                    },
+                    x: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power3.out"
+                }
+            );
+        });
+
+        gsap.utils.toArray('.gs-fade-left').forEach(elem => {
+            gsap.fromTo(elem,
+                { x: 50, opacity: 0 },
+                {
+                    scrollTrigger: {
+                        trigger: elem,
+                        start: "top 85%",
+                    },
+                    x: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power3.out"
+                }
+            );
+        });
+
+        // Staggered tech cards
+        gsap.fromTo('.tech-card',
+            { y: 30, opacity: 0 },
+            {
+                scrollTrigger: {
+                    trigger: '#tecnologias',
+                    start: "top 75%",
+                },
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "back.out(1.2)"
+            }
+        );
+
+        // Mouse Glow Effect Tracker for .glow-effect elements
+        document.querySelectorAll('.glow-effect').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--x', `${x}px`);
+                card.style.setProperty('--y', `${y}px`);
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-PT" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projetos | Ebenezer Felismino</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            400: '#4ade80',
+                            500: '#22c55e',
+                        },
+                        dark: '#030712',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #030712;
+            color: #f8fafc;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(34, 197, 94, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(34, 197, 94, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #4ade80, #06b6d4, #4ade80);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-brand-500 selection:text-white relative">
+    <div class="fixed inset-0 w-full h-full z-[-2]">
+        <img src="public/bg_real_office.png" class="w-full h-full object-cover opacity-80"
+            alt="UI/UX Workspace Background">
+        <div class="absolute inset-0 bg-dark/40"></div>
+    </div>
+    <header class="border-b border-white/5 bg-dark/20 backdrop-blur-md sticky top-0 z-50">
+        <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+            <a href="index.html" class="text-2xl font-black tracking-tighter hover:opacity-80 transition">Ebenezer
+                Felismino<span class="text-brand-400">.</span></a>
+            <a href="index.html" class="text-sm font-medium text-slate-300 hover:text-white flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Voltar à página principal
+            </a>
+        </nav>
+    </header>
+    <main class="mx-auto max-w-6xl px-6 py-24">
+        <div class="mb-16">
+            <h1 class="text-5xl font-black tracking-tight mb-4">Galeria de <span class="text-brand-400">Projetos</span>
+            </h1>
+            <p class="text-xl text-slate-400 max-w-2xl">Uma coleção de trabalhos focado em interfaces limpas, código
+                natural e experiências reais.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- 1.png -->
+            <article class="glass-card rounded-3xl overflow-hidden group">
+                <div
+                    class="aspect-video flex items-center justify-center overflow-hidden bg-slate-900 border-b border-white/5 relative">
+                    <img src="pr/1.png" alt="Dashboard UI"
+                        class="w-full object-contain transition-transform duration-700 group-hover:scale-105" />
+                </div>
+                <div class="p-8">
+                    <div class="text-brand-400 text-xs font-bold tracking-widest uppercase mb-3">UI/UX Design</div>
+                    <h3 class="text-2xl font-bold mb-3">Aplicação Dashboard</h3>
+                    <p class="text-slate-400 mb-6 line-clamp-3">Design focado em organização de métricas e
+                        acessibilidade para interfaces ricas em dados.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span
+                            class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">Figma</span>
+                        <span class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">UI
+                            Design</span>
+                    </div>
+                    <a href="pr/1.png" target="_blank"
+                        class="mt-6 w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-brand-500/10 text-brand-400 font-medium hover:bg-brand-500 hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                            </path>
+                        </svg>
+                        Ver projeto
+                    </a>
+                </div>
+            </article>
+
+            <!-- 2.png -->
+            <article class="glass-card rounded-3xl overflow-hidden group">
+                <div
+                    class="aspect-video flex items-center justify-center overflow-hidden bg-slate-900 border-b border-white/5 relative">
+                    <img src="pr/2.png" alt="Mobile Flow"
+                        class="w-full object-contain transition-transform duration-700 group-hover:scale-105" />
+                </div>
+                <div class="p-8">
+                    <div class="text-brand-400 text-xs font-bold tracking-widest uppercase mb-3">Interface</div>
+                    <h3 class="text-2xl font-bold mb-3">Sistema de Gestão</h3>
+                    <p class="text-slate-400 mb-6 line-clamp-3">Visão simplificada para gestão e acompanhamento focado
+                        na experiência do utilizador.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span
+                            class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">Wireframe</span>
+                        <span class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">UX
+                            Research</span>
+                    </div>
+                    <a href="pr/2.png" target="_blank"
+                        class="mt-6 w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-brand-500/10 text-brand-400 font-medium hover:bg-brand-500 hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                            </path>
+                        </svg>
+                        Ver projeto
+                    </a>
+                </div>
+            </article>
+
+            <!-- 3.png -->
+            <article class="glass-card rounded-3xl overflow-hidden group">
+                <div
+                    class="aspect-video flex items-center justify-center overflow-hidden bg-slate-900 border-b border-white/5 relative">
+                    <img src="pr/3.png" alt="E-commerce UI"
+                        class="w-full object-contain transition-transform duration-700 group-hover:scale-105" />
+                </div>
+                <div class="p-8">
+                    <div class="text-brand-400 text-xs font-bold tracking-widest uppercase mb-3">Produto</div>
+                    <h3 class="text-2xl font-bold mb-3">Interface Moderna</h3>
+                    <p class="text-slate-400 mb-6 line-clamp-3">Apresentação moderna e funcional utilizando padrões
+                        atuais de usabilidade.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">Design
+                            System</span>
+                        <span
+                            class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">Componentes</span>
+                    </div>
+                    <a href="pr/3.png" target="_blank"
+                        class="mt-6 w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-brand-500/10 text-brand-400 font-medium hover:bg-brand-500 hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                            </path>
+                        </svg>
+                        Ver projeto
+                    </a>
+                </div>
+            </article>
+
+            <!-- 33.png -->
+            <article class="glass-card rounded-3xl overflow-hidden group">
+                <div
+                    class="aspect-video flex items-center justify-center overflow-hidden bg-slate-900 border-b border-white/5 relative">
+                    <img src="pr/33.png" alt="App Details"
+                        class="w-full object-contain transition-transform duration-700 group-hover:scale-105" />
+                </div>
+                <div class="p-8">
+                    <div class="text-brand-400 text-xs font-bold tracking-widest uppercase mb-3">Detalhes</div>
+                    <h3 class="text-2xl font-bold mb-3">Painel Analítico</h3>
+                    <p class="text-slate-400 mb-6 line-clamp-3">Visualização otimizada para dados complexos em
+                        resoluções mais responsivas.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span
+                            class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">Analytics</span>
+                        <span
+                            class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">Estrutura</span>
+                    </div>
+                    <a href="pr/33.png" target="_blank"
+                        class="mt-6 w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-brand-500/10 text-brand-400 font-medium hover:bg-brand-500 hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                            </path>
+                        </svg>
+                        Ver projeto
+                    </a>
+                </div>
+            </article>
+
+            <!-- 333.png -->
+            <article class="glass-card rounded-3xl overflow-hidden group">
+                <div
+                    class="aspect-video flex items-center justify-center overflow-hidden bg-slate-900 border-b border-white/5 relative">
+                    <img src="pr/333.png" alt="Fintech Mockup"
+                        class="w-full object-contain transition-transform duration-700 group-hover:scale-105" />
+                </div>
+                <div class="p-8">
+                    <div class="text-brand-400 text-xs font-bold tracking-widest uppercase mb-3">Variante UI</div>
+                    <h3 class="text-2xl font-bold mb-3">Exploração Visual</h3>
+                    <p class="text-slate-400 mb-6 line-clamp-3">Variante da interface base com esquema de contraste
+                        aprimorado para legibilidade.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span
+                            class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">Mockup</span>
+                        <span
+                            class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">Ideação</span>
+                    </div>
+                    <a href="pr/333.png" target="_blank"
+                        class="mt-6 w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-brand-500/10 text-brand-400 font-medium hover:bg-brand-500 hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                            </path>
+                        </svg>
+                        Ver projeto
+                    </a>
+                </div>
+            </article>
+
+            <!-- 333333.png -->
+            <article class="glass-card rounded-3xl overflow-hidden group">
+                <div
+                    class="aspect-video flex items-center justify-center overflow-hidden bg-slate-900 border-b border-white/5 relative">
+                    <img src="pr/333333.png" alt="SaaS UI"
+                        class="w-full object-contain transition-transform duration-700 group-hover:scale-105" />
+                </div>
+                <div class="p-8">
+                    <div class="text-brand-400 text-xs font-bold tracking-widest uppercase mb-3">Fluxos</div>
+                    <h3 class="text-2xl font-bold mb-3">Resumo da Interface</h3>
+                    <p class="text-slate-400 mb-6 line-clamp-3">Estrutura que enfatiza a navegação, simplificando ações
+                        principais.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span
+                            class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">Estudo</span>
+                        <span
+                            class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">Protótipo</span>
+                    </div>
+                    <a href="pr/333333.png" target="_blank"
+                        class="mt-6 w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-brand-500/10 text-brand-400 font-medium hover:bg-brand-500 hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                            </path>
+                        </svg>
+                        Ver projeto
+                    </a>
+                </div>
+            </article>
+
+            <!-- 5.png -->
+            <article class="glass-card rounded-3xl overflow-hidden group">
+                <div
+                    class="aspect-video flex items-center justify-center overflow-hidden bg-slate-900 border-b border-white/5 relative">
+                    <img src="pr/5.png" alt="Mobile Dashboard"
+                        class="w-full object-contain transition-transform duration-700 group-hover:scale-105" />
+                </div>
+                <div class="p-8">
+                    <div class="text-brand-400 text-xs font-bold tracking-widest uppercase mb-3">Design Estático</div>
+                    <h3 class="text-2xl font-bold mb-3">Plataforma Digital</h3>
+                    <p class="text-slate-400 mb-6 line-clamp-3">Alinhamento preciso num layout multi-páginas, focando no
+                        aspecto premium do serviço.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span
+                            class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">Layout</span>
+                        <span
+                            class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">Visual</span>
+                    </div>
+                    <a href="pr/5.png" target="_blank"
+                        class="mt-6 w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-brand-500/10 text-brand-400 font-medium hover:bg-brand-500 hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                            </path>
+                        </svg>
+                        Ver projeto
+                    </a>
+                </div>
+            </article>
+
+            <!-- 7.png -->
+            <article class="glass-card rounded-3xl overflow-hidden group">
+                <div
+                    class="aspect-video flex items-center justify-center overflow-hidden bg-slate-900 border-b border-white/5 relative">
+                    <img src="pr/7.png" alt="Creative Interface"
+                        class="w-full object-contain transition-transform duration-700 group-hover:scale-105" />
+                </div>
+                <div class="p-8">
+                    <div class="text-brand-400 text-xs font-bold tracking-widest uppercase mb-3">Exploração</div>
+                    <h3 class="text-2xl font-bold mb-3">Visualização de Dados</h3>
+                    <p class="text-slate-400 mb-6 line-clamp-3">Representação limpa e sofisticada dos dados, utilizando
+                        tipografia contemporânea.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span
+                            class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">Gráficos</span>
+                        <span
+                            class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">Tipografia</span>
+                    </div>
+                    <a href="pr/7.png" target="_blank"
+                        class="mt-6 w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-brand-500/10 text-brand-400 font-medium hover:bg-brand-500 hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                            </path>
+                        </svg>
+                        Ver projeto
+                    </a>
+                </div>
+            </article>
+
+            <!-- screen.png -->
+            <article class="glass-card rounded-3xl overflow-hidden group md:col-span-2">
+                <div class="aspect-video overflow-hidden bg-slate-900 border-b border-white/5 relative">
+                    <img src="pr/screen.png" alt="Concept Design Overview"
+                        class="w-full h-full object-contain object-top transition-transform duration-700 group-hover:scale-105" />
+                </div>
+                <div class="p-8">
+                    <div class="text-brand-400 text-xs font-bold tracking-widest uppercase mb-3">Apresentação Geral
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Mockup Global</h3>
+                    <p class="text-slate-400 mb-6 max-w-2xl">Um resumo expandido da interface, consolidando todo o
+                        trabalho de experiência criado durante o processo de design.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span
+                            class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">Apresentação</span>
+                        <span
+                            class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">Showcase</span>
+                        <span class="px-3 py-1 rounded bg-white/5 text-xs text-slate-300 border border-white/5">Design
+                            Final</span>
+                    </div>
+                    <a href="pr/screen.png" target="_blank"
+                        class="mt-6 w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-brand-500/10 text-brand-400 font-medium hover:bg-brand-500 hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                            </path>
+                        </svg>
+                        Ver projeto completo
+                    </a>
+                </div>
+            </article>
+        </div>
+    </main>
+    <footer class="border-t border-white/5 py-10 mt-10 text-center text-slate-500">
+        <p>© 2026 Ebenezer Felismino.</p>
+    </footer>
+</body>
+
+</html>
